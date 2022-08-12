@@ -1,0 +1,29 @@
+.left-side-bar{
+    background-color: white;
+}
+
+.corpo{
+    height: 100%;
+
+}
+body{
+    height: 100%;
+}
+
+html{
+    height: 100%;
+}
+
+.conteudo {
+    background-color: #f6f5f3;
+    box-shadow: inset 1px 0px 10px rgba(128, 128, 128, 0.1);
+}
+
+.left-bar-topo span{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #ed4404;
+    padding: 10px;
+    box-shadow: 1px 1px 5px rgba(128, 128, 128, 0.5);
+    cursor: pointer;
+}
