@@ -1,7 +1,3 @@
-<?php
-    dd($condominios);
-?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -24,21 +20,27 @@
 <body>
 
     <div class="d-flex align-items-lg-stretch corpo">
-        <div class="col-md-2 left-side-bar p-2">
+        <div class="col-md-4 left-side-bar p-2">
             <div class="left-bar-topo text-center mt-5">
                 <span class="text-white"><i class="fa-solid fa-chart-line"></i> Analitcs</span>
             </div>
             <div class="text-center mt-5">
                 <form action="">
                     <label class="form-label" for="condominio">Selecione o Condomínio</label>
-                    <select name="id_condominio" id="condominio" class="form-control text-center">
+                    <select name="id_condominio" id="condominio" class="form-select text-center" aria-label="Default select">
                         <option>Condomínio</option>
-                        <option value="">Dedicado Proprio</option>
+                        @foreach ($condominios as $condominio)
+                        <option value="{{ $condominio->id_condominio }}">{{ $condominio->no_condominio }}</option>
+                        @endforeach
                     </select>
+                    <label for="dt_inicio" class="form-label col-12 mt-2">Data Inicio</label>
+                    <input type="datetime-local" name="dt_inicio" id="dt_inicio" class="form_control col-12">
+                    <label for="dt_fim" class="form-label col-12 mt-2">Data Fim</label>
+                    <input type="datetime-local" name="dt_fim" id="dt_fim" class="form_control col-12">
                 </form>
             </div>
         </div>
-        <div class="col-md-10 p-2 conteudo">
+        <div class="col-md-8 p-2 conteudo">
             Olá Mundo 2
         </div>
     </div>
