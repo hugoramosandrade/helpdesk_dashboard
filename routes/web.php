@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\MetricasController;
+use App\Http\Controllers\PrincipalController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/metricas', [MetricasController::class, 'index'])->name('metricas.index');
+Route::get('/principal', [PrincipalController::class, 'index'])->name('principal.index');
+
+Route::get('/clientes');

@@ -1,29 +1,31 @@
-.left-side-bar{
-    background-color: white;
+.left-side-bar {
+    box-shadow: 1px 0px 10px gray;
 }
 
-.corpo{
+.corpo {
     height: 100%;
 
 }
-body{
-    height: 100%;
-}
 
-html{
+body {
     height: 100%;
-}
-
-.conteudo {
     background-color: #f6f5f3;
-    box-shadow: inset 1px 0px 10px rgba(128, 128, 128, 0.1);
 }
 
-.left-bar-topo span{
-    padding: 5px;
-    border-radius: 5px;
+html {
+    height: 100%;
+}
+
+
+
+
+.botao:hover {
     background-color: #ed4404;
-    padding: 10px;
-    box-shadow: 1px 1px 5px rgba(128, 128, 128, 0.5);
-    cursor: pointer;
+    border: none;
+}
+
+.botao {
+    background-color: #ed4404;
+    border: none;
+    margin-top: 40px;
 }
