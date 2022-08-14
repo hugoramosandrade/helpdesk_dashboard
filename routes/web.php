@@ -20,4 +20,6 @@ Route::get('/', function () {
 
 Route::get('/principal', [PrincipalController::class, 'index'])->name('principal.index');
 
-Route::get('/clientes');
+Route::get('/clientes', [PrincipalController::class, 'getAllClientes'])->name('principal.getclients');
+
+Route::get('/os-tipo', [PrincipalController::class, 'getAllOsTipo'])->name('princiupal.ostipo');

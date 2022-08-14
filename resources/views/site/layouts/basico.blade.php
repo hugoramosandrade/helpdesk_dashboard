@@ -13,6 +13,69 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            function getCondominio() {
+                const ajax = new XMLHttpRequest;
+
+                ajax.open('GET', 'http://localhost:8000/clientes');
+
+                ajax.onreadystatechange = () => {
+                    if(ajax.readyState === 4 && ajax.status === 200){
+
+                        let condominio = JSON.parse(ajax.responseText);
+
+                        for (let i in condominio){
+                            let option = document.createElement('option');
+                            option.value = condominio[i].id_condominio;
+
+                            let selecCond = document.getElementById('condominio');
+                            let span = document.createElement('span');
+                            option.appendChild(span);
+                            span.innerHTML = condominio[i].no_condominio.substring(0, 25);
+                            selecCond.appendChild(option);
+                        }
+                    }
+                }
+
+                ajax.send();
+            }
+
+            function getOsTipo() {
+                const ajax = new XMLHttpRequest;
+
+                ajax.open('GET', 'http://localhost:8000/os-tipo');
+
+                ajax.onreadystatechange = () => {
+                    if(ajax.readyState === 4 && ajax.status === 200){
+
+                        let osTipo = JSON.parse(ajax.responseText);
+
+                        console.log(osTipo[0]);
+                        for (i in osTipo) {
+                            //console.log(osTipo[i]);
+                            let option = document.createElement('option');
+                            option.value = osTipo[i].id_os_tipo;
+
+                            selecTipo = document.getElementById('os_tipo');
+                            let span = document.createElement('span');
+                            option.appendChild(span);
+                            span.innerHTML = osTipo[i].no_os_tipo;
+                            selecTipo.appendChild(option);
+                        }
+                    }
+                }
+
+                ajax.send();
+            }
+
+            getCondominio();
+
+            getOsTipo();
+
+        });
+    </script>
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
     <title>Helpdesk Dashboard - @yield('titulo')</title>
 </head>
@@ -29,11 +92,7 @@
                     <label class="form-label text-light" for="condominio">Selecione o Condomínio</label>
                     <select name="id_condominio" id="condominio" class="form-select text-center" aria-label="Default select">
                         <option>Condomínio</option>
-                        {{--
-                        @foreach ($condominios as $condominio)
-                        <option value="{{ $condominio->id_condominio }}">{{ $condominio->no_condominio }}</option>
-                        @endforeach
-                        --}}
+                        
                     </select>
                     <label for="os_tipo" class="form label col-12 mt-2 text-light" aria-label="Default select">Tipo da OS</label>
                     <select name="os_tipo" id="os_tipo" class="form-select text-center mt-1">
