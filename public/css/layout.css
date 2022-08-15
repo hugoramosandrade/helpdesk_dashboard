@@ -29,3 +29,12 @@ html {
     border: none;
     margin-top: 40px;
 }
+
+.top-nav-menu{
+    border-radius: 5px;
+    box-shadow: 1px 1px 15px rgb(152, 152, 152);
+}
+
+.navbar-nav .nav-link.active {
+    color: #ed4404;
+}

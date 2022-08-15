@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PainelController;
 use App\Http\Controllers\PrincipalController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +19,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/principal', [PrincipalController::class, 'index'])->name('principal.index');
+Route::get('/principal', [PrincipalController::class, 'index'])
+->name('principal.index');
 
-Route::get('/clientes', [PrincipalController::class, 'getAllClientes'])->name('principal.getclients');
+Route::get('/clientes', [PrincipalController::class, 'getAllClientes'])
+->name('principal.getclients');
 
-Route::get('/os-tipo', [PrincipalController::class, 'getAllOsTipo'])->name('princiupal.ostipo');
+Route::get('/os-tipo', [PrincipalController::class, 'getAllOsTipo'])
+->name('princiupal.ostipo');
+
+Route::post('/os', [PainelController::class, 'getOs'])
+->name('painel.getos');
