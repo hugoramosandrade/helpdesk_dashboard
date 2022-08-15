@@ -28,6 +28,8 @@ html {
     background-color: #ed4404;
     border: none;
     margin-top: 40px;
+    padding: 5px;
+    border-radius: 4px;
 }
 
 .top-nav-menu{
@@ -45,4 +47,5 @@ html {
     border: none 1px black;
     border-radius: 5px;
     box-shadow: 1px 1px 15px rgb(152, 152, 152);
+    margin: 2px;
 }

@@ -50,7 +50,7 @@
                     <input type="datetime-local" name="data_final" id="data_final"
                         class="form-control col-12 text-center">
                 </form>
-                <button class="btn botao text-white col-12" onclick="sendForm()"><i
+                <button class="botao text-white col-12" onclick="sendForm()"><i
                         class="fa-solid fa-magnifying-glass"></i> Consultar</button>
             </div>
         </div>

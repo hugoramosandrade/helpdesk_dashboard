@@ -23,7 +23,8 @@ class PainelController extends Controller
         $intervalo = date_diff($data2, $data1);*/
         
 
-        $os = Os::select(
+        $os = new Os();
+        $os->select(
             'os.id_os',
             'condominio.no_condominio',
             'os_status.no_os_status',
@@ -46,9 +47,13 @@ class PainelController extends Controller
         ->join('os_fornecedor_funcionario', 'os.id_os', 'os_fornecedor_funcionario.id_os')
         ->join('fornecedor_funcionario', 'os_fornecedor_funcionario.id_fornecedor_funcionario', 'fornecedor_funcionario.id_fornecedor_funcionario')
         ->where('os.id_condominio', $id_condominio)
-        ->where('os_tipo.id_os_tipo', $id_os_tipo)
-        ->whereBetween('os.dt_inicio', [$data_inicial, $data_final])
-        ->get();
+        ->whereBetween('os.dt_inicio', [$data_inicial, $data_final]);
+        
+        if($id_os_tipo != ''){
+            $os->where('os_tipo.id_os_tipo', $id_os_tipo);
+        }
+
+        $os->get();
         
 /*
         $retorno = [
