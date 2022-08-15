@@ -37,4 +37,12 @@ html {
 
 .navbar-nav .nav-link.active {
     color: #ed4404;
+    border: solid #ed4404 1px;
+    border-radius: 5px;
+}
+
+.painel{
+    border: none 1px black;
+    border-radius: 5px;
+    box-shadow: 1px 1px 15px rgb(152, 152, 152);
 }

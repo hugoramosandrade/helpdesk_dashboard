@@ -16,4 +16,6 @@
         </ul>
     </div>
 </nav>
+<div class="painel mt-3" id="painel"></div>
+<script src="{{ asset('js/makeTable.js') }}"></script>
 @endsection
