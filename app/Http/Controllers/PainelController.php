@@ -33,18 +33,13 @@ class PainelController extends Controller
             'os.ds_os',
             'os.ds_os_solucao',
             'os_status.no_os_status'
-            //'os_resposta.ds_os_resposta',
-            //'os_resposta.dt_inicio as dt_inicio_resposta',
-            //DB::raw('age(os_resposta.dt_inicio, os.dt_inicio) as sla')
         )
         ->join('condominio', 'os.id_condominio', 'condominio.id_condominio')
         ->join('os_tipo', 'os.id_os_tipo', 'os_tipo.id_os_tipo')
-        //->join('os_resposta', 'os.id_os', 'os_resposta.id_os')
         ->join('os_status', 'os.id_os_status', 'os_status.id_os_status')
         ->join('os_fornecedor_funcionario', 'os.id_os', 'os_fornecedor_funcionario.id_os')
         ->join('fornecedor_funcionario', 'os_fornecedor_funcionario.id_fornecedor_funcionario', 'fornecedor_funcionario.id_fornecedor_funcionario')
         ->where('os.id_condominio', $id_condominio)
-        //->where('os_tipo.id_os_tipo', $id_os_tipo)
         ->whereBetween('os.dt_inicio', [$data_inicial, $data_final]);
 
         if($id_os_tipo != ''){
@@ -52,16 +47,6 @@ class PainelController extends Controller
         }
         
         $rs = $consulta->get();
-
-        
-/*
-        $retorno = [
-            'id_condominio' => $id_condominio,
-            'id_os_tipo' => $id_os_tipo,
-            'data_inicial' => $data_inicial,
-            'data_final' => $data_final
-        ];*/
-        
 
         return response()->json($rs);
     }
