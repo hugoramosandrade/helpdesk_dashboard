@@ -13,8 +13,15 @@ function sendForm() {
 
             console.log(osResponse);
 
-            let tbody = document.createElement('tbody');
             let tabela = document.getElementById('os_dados');
+
+            let filho = tabela.querySelector('#corpo');
+
+            if(filho !== null){
+                filho.remove();
+            }
+            let tbody = document.createElement('tbody');
+            tbody.id = 'corpo';
             tabela.appendChild(tbody);
             
             for(let i in osResponse){
@@ -24,19 +31,19 @@ function sendForm() {
                 let tdTipo = document.createElement('td');
                 let tdAbertura = document.createElement('td');
                 let tdFuncionario = document.createElement('td');
-                let tdSla = document.createElement('td');
+                let tdOsStatus = document.createElement('td');
 
                 tr.appendChild(tdCliente);
                 tr.appendChild(tdTipo);
                 tr.appendChild(tdAbertura);
                 tr.appendChild(tdFuncionario);
-                tr.appendChild(tdSla);
+                tr.appendChild(tdOsStatus);
 
                 tdCliente.innerHTML = osResponse[i].no_condominio;
                 tdTipo.innerHTML = osResponse[i].no_os_tipo;
                 tdAbertura.innerHTML = osResponse[i].dt_inicio;
                 tdFuncionario.innerHTML = osResponse[i].no_fornecedor_funcionario;
-                tdSla.innerHTML = osResponse[i].sla;
+                tdOsStatus.innerHTML = osResponse[i].no_os_status;
 
                 tbody.appendChild(tr);
 

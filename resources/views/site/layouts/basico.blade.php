@@ -49,9 +49,8 @@
                     <label for="data_final" class="form-label col-12 mt-2 text-light">Data Fim</label>
                     <input type="datetime-local" name="data_final" id="data_final"
                         class="form-control col-12 text-center">
-                </form>
-                <button class="botao text-white col-12" onclick="sendForm()"><i
-                        class="fa-solid fa-magnifying-glass"></i> Consultar</button>
+                    </form>
+                    <button class="botao text-white col-12" onclick="sendForm()"><i class="fa-solid fa-magnifying-glass"></i> Consultar</button>
             </div>
         </div>
         <div class="col-xxl-10 col-xl-8 p-2 conteudo">

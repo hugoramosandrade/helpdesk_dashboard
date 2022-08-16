@@ -10,13 +10,13 @@ $(document).ready(function () {
         let thOsTipo = document.createElement('th');
         let thDt_abertura = document.createElement('th');
         let thFuncionario = document.createElement('th');
-        let thSla = document.createElement('th');
+        let thOsStatus = document.createElement('th');
 
         trTop.appendChild(thCliente);
         trTop.appendChild(thOsTipo);
         trTop.appendChild(thDt_abertura);
         trTop.appendChild(thFuncionario);
-        trTop.appendChild(thSla);
+        trTop.appendChild(thOsStatus);
 
         thead.appendChild(trTop);
 
@@ -28,13 +28,13 @@ $(document).ready(function () {
         thOsTipo.setAttribute('scope', 'col');
         thDt_abertura.setAttribute('scope', 'col');
         thFuncionario.setAttribute('scope', 'col');
-        thSla.setAttribute('scope', 'col');
+        thOsStatus.setAttribute('scope', 'col');
 
         thCliente.innerHTML = 'Cliente';
         thOsTipo.innerHTML = 'Tipo';
         thDt_abertura.innerHTML = 'Abertura';
         thFuncionario.innerHTML = 'Funcionario';
-        thSla.innerHTML = 'SLA';
+        thOsStatus.innerHTML = 'Status';
         tabela.id = "os_dados";
 
         conteudo.appendChild(tabela);
