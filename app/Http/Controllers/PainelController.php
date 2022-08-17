@@ -14,13 +14,6 @@ class PainelController extends Controller
         $id_os_tipo = $request->input('id_os_tipo');
         $data_inicial = $request->input('data_inicial');
         $data_final = $request->input('data_final');
-
-        $data_inicial = date('Y-m-d H:i:s', strtotime($data_inicial));
-        $data_final = date('Y-m-d H:i:59', strtotime($data_final));
-/*
-        $data1 = date_create($data_inicial);
-        $data2 = date_create($data_final);
-        $intervalo = date_diff($data2, $data1);*/
         
 
         $os = new Os();

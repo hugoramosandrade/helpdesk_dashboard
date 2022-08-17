@@ -29,13 +29,13 @@
             <div class="text-center mt-5">
                 <img src="{{ asset('img/logo-site-cd.webp') }}" alt="Condominio Dedicado">
             </div>
-            <div class="text-center mt-5">
+            <div class="text-center mt-5" id="os-form-grid">
                 <form id="os-form" name="os-form">
                     @csrf
-                    <label class="form-label text-light" for="condominio">Selecione o Condomínio</label>
+                    <label class="form-label text-light" for="condominio">Condomínio</label>
                     <select name="id_condominio" id="condominio" class="form-select text-center"
                         aria-label="Default select">
-                        <option>Condomínio</option>
+                        <option value="">Selecione o Condomínio</option>
 
                     </select>
                     <label for="os_tipo" class="form label col-12 mt-2 text-light" aria-label="Default select">Tipo da
@@ -44,10 +44,10 @@
                         <option value="">Selecione o Tipo</option>
                     </select>
                     <label for="data_inicial" class="form-label col-12 mt-2 text-light">Data Inicio</label>
-                    <input type="datetime-local" name="data_inicial" id="data_inicial"
+                    <input type="date" name="data_inicial" id="data_inicial"
                         class="form-control col-12 text-center">
                     <label for="data_final" class="form-label col-12 mt-2 text-light">Data Fim</label>
-                    <input type="datetime-local" name="data_final" id="data_final"
+                    <input type="date" name="data_final" id="data_final"
                         class="form-control col-12 text-center">
                     </form>
                     <button class="botao text-white col-12" onclick="sendForm()"><i class="fa-solid fa-magnifying-glass"></i> Consultar</button>
