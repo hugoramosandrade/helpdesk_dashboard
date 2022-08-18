@@ -4,7 +4,7 @@
 
 @section('conteudo')
 <nav class="navbar navbar-expand-lg bg-light top-nav-menu">
-    <div class="container-fluid">
+    <div class="container-fluid" id="os-content">
         <span class="navbar-brand"><i class="fa-solid fa-tv"></i> Dashboard Panel</span>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">

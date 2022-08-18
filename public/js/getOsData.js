@@ -1,3 +1,5 @@
+const { create } = require("lodash");
+
 function sendForm() {
     let osForm = new FormData(document.querySelector('form'));
 
@@ -19,11 +21,7 @@ function sendForm() {
         erroMsg.className = 'text-danger';
         erroMsg.innerHTML = 'O(s) seguinte(s) campo(s) não foi(foram) preenchido(s): <br>';
         osFormGrid.appendChild(erroMsg);
-        if (id_condominio.length === 0) {
-            let erroIdCondominio = document.createElement('span');
-            erroIdCondominio.innerHTML = "* Condominio<br>";
-            erroMsg.appendChild(erroIdCondominio);
-        }
+        
         if (osForm.get('data_inicial') === '') {
             let erroDataInicial = document.createElement('span');
             erroDataInicial.innerHTML = "* Data Inicial<br>";
@@ -73,7 +71,7 @@ function sendForm() {
                 tbody.id = 'corpo';
                 tabela.appendChild(tbody);
 
-                for (let i in osResponse) {
+                for (let i in osResponse.data) {
 
                     let tr = document.createElement('tr');
                     let tdCliente = document.createElement('td');
@@ -88,14 +86,28 @@ function sendForm() {
                     tr.appendChild(tdFuncionario);
                     tr.appendChild(tdOsStatus);
 
-                    tdCliente.innerHTML = osResponse[i].no_condominio;
-                    tdTipo.innerHTML = osResponse[i].no_os_tipo;
-                    tdAbertura.innerHTML = osResponse[i].dt_inicio;
-                    tdFuncionario.innerHTML = osResponse[i].no_fornecedor_funcionario;
-                    tdOsStatus.innerHTML = osResponse[i].no_os_status;
+                    let dt_inicio = new Date(osResponse.data[i].dt_inicio);
+
+                    tdCliente.innerHTML = osResponse.data[i].no_condominio;
+                    tdTipo.innerHTML = osResponse.data[i].no_os_tipo;
+                    tdAbertura.innerHTML = dt_inicio.toLocaleString('pt-BR');
+                    tdFuncionario.innerHTML = osResponse.data[i].no_fornecedor_funcionario;
+                    tdOsStatus.innerHTML = osResponse.data[i].no_os_status;
 
                     tbody.appendChild(tr);
 
+                }
+                let osContent = document.getElementById('os-content');
+                let nav = document.createElement('nav');
+                let ul = document.createElement('ul');
+                nav.setAttribute('aria-label', 'Page navigation');
+                ul.className = 'pagination';
+                nav.appendChild(ul)
+                osContent.appendChild(nav);
+
+                for(let i in osResponse.link){
+                    let li = document.createElement('li');
+                    li.className = 'page-item';
                 }
             }
         }

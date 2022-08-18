@@ -32,14 +32,17 @@ class PainelController extends Controller
         ->join('os_status', 'os.id_os_status', 'os_status.id_os_status')
         ->join('os_fornecedor_funcionario', 'os.id_os', 'os_fornecedor_funcionario.id_os')
         ->join('fornecedor_funcionario', 'os_fornecedor_funcionario.id_fornecedor_funcionario', 'fornecedor_funcionario.id_fornecedor_funcionario')
-        ->where('os.id_condominio', $id_condominio)
-        ->whereBetween('os.dt_inicio', [$data_inicial, $data_final]);
+        ->whereBetween('os.dt_inicio', [$data_inicial, $data_final])
+        ->orderBy('os.dt_inicio', 'desc');
 
+        if($id_condominio != ''){
+            $consulta = $consulta->where('os.id_condominio', $id_condominio);
+        }
         if($id_os_tipo != ''){
             $consulta = $consulta->where('os_tipo.id_os_tipo', $id_os_tipo);
         }
         
-        $rs = $consulta->get();
+        $rs = $consulta->paginate(15);
 
         return response()->json($rs);
     }
