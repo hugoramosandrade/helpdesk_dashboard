@@ -33,6 +33,7 @@ class PainelController extends Controller
         ->join('os_fornecedor_funcionario', 'os.id_os', 'os_fornecedor_funcionario.id_os')
         ->join('fornecedor_funcionario', 'os_fornecedor_funcionario.id_fornecedor_funcionario', 'fornecedor_funcionario.id_fornecedor_funcionario')
         ->whereBetween('os.dt_inicio', [$data_inicial, $data_final])
+        ->whereNull('os.dt_fim')
         ->orderBy('os.dt_inicio', 'desc');
 
         if($id_condominio != ''){

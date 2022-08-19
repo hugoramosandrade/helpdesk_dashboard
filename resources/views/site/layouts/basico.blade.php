@@ -50,7 +50,7 @@
                     <input type="date" name="data_final" id="data_final"
                         class="form-control col-12 text-center">
                     </form>
-                    <button class="botao text-white col-12" onclick="sendForm()"><i class="fa-solid fa-magnifying-glass"></i> Consultar</button>
+                    <button class="botao text-white col-12" onclick='sendForm("http://localhost:8000/os")'><i class="fa-solid fa-magnifying-glass"></i> Consultar</button>
             </div>
         </div>
         <div class="col-xxl-10 col-xl-8 p-2 conteudo overflow-auto">

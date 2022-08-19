@@ -1,6 +1,4 @@
-const { create } = require("lodash");
-
-function sendForm() {
+function sendForm(url) {
     let osForm = new FormData(document.querySelector('form'));
 
     let id_condominio = osForm.get('id_condominio');
@@ -50,7 +48,8 @@ function sendForm() {
 
         const request = new XMLHttpRequest;
 
-        const url = 'http://localhost:8000/os';
+
+        console.log(url);
 
         request.open('POST', url);
 
@@ -97,18 +96,43 @@ function sendForm() {
                     tbody.appendChild(tr);
 
                 }
-                let osContent = document.getElementById('os-content');
+                let painel = document.getElementById('painel');
+
+                let paginate = painel.querySelector('#paginate');
+
+                if(paginate !== null){
+                    paginate.remove();
+                }
+
                 let nav = document.createElement('nav');
                 let ul = document.createElement('ul');
                 nav.setAttribute('aria-label', 'Page navigation');
+                nav.className = 'd-flex lign-items-center p-3';
+                nav.id = 'paginate';
                 ul.className = 'pagination';
                 nav.appendChild(ul)
-                osContent.appendChild(nav);
+                painel.appendChild(nav);
 
-                for(let i in osResponse.link){
+                for(let i in osResponse.links){
                     let li = document.createElement('li');
+                    let span = document.createElement('span');
                     li.className = 'page-item';
+                    span.className = 'page-link';
+                    span.style.cursor = 'pointer';
+                    span.innerHTML = osResponse.links[i].label;
+                    li.appendChild(span);
+                    ul.appendChild(li);
+                    span.setAttribute('onclick', "sendForm('"+ osResponse.links[i].url +"')");
+
+                    if(osResponse.links[i].active === true){
+                        li.className = 'active';
+                    }
+                    if(osResponse.links[i].url === null){
+                        li.className = 'disabled';
+                    }
+
                 }
+
             }
         }
 
