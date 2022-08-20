@@ -26,7 +26,7 @@ class PainelController extends Controller
             'os.ds_os',
             'os.ds_os_solucao',
             'os_status.no_os_status',
-            'os_resposta.dt_inicio as resposta_dt_inicio'
+            'os_resposta.dt_inicio as dt_fechamento'
         )
         ->join('condominio', 'os.id_condominio', 'condominio.id_condominio')
         ->join('os_tipo', 'os.id_os_tipo', 'os_tipo.id_os_tipo')
