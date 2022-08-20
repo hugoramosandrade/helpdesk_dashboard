@@ -71,20 +71,28 @@ function sendForm(url) {
                     let tdAbertura = document.createElement('td');
                     let tdFuncionario = document.createElement('td');
                     let tdOsStatus = document.createElement('td');
+                    let tdSla = document.createElement('td');
 
                     tr.appendChild(tdCliente);
                     tr.appendChild(tdTipo);
                     tr.appendChild(tdAbertura);
                     tr.appendChild(tdFuncionario);
                     tr.appendChild(tdOsStatus);
+                    tr.appendChild(tdSla);
 
                     let dt_inicio = new Date(osResponse.data[i].dt_inicio);
+                    let dt_fechamento = new Date(osResponse.data[i].dt_fechamento)
+                    let sla = '';
+                    if(osResponse.data[i].dt_fechamento !== null){
+                        sla = dt_fechamento.getTime() - dt_inicio.getTime();
+                    }
 
                     tdCliente.innerHTML = osResponse.data[i].no_condominio;
                     tdTipo.innerHTML = osResponse.data[i].no_os_tipo;
                     tdAbertura.innerHTML = dt_inicio.toLocaleString('pt-BR');
                     tdFuncionario.innerHTML = osResponse.data[i].no_fornecedor_funcionario;
                     tdOsStatus.innerHTML = osResponse.data[i].no_os_status;
+                    tdSla.innerHTML = sla;
 
                     tbody.appendChild(tr);
 

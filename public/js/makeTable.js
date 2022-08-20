@@ -11,12 +11,14 @@ $(document).ready(function () {
         let thDt_abertura = document.createElement('th');
         let thFuncionario = document.createElement('th');
         let thOsStatus = document.createElement('th');
+        let thSla = document.createElement('th');
 
         trTop.appendChild(thCliente);
         trTop.appendChild(thOsTipo);
         trTop.appendChild(thDt_abertura);
         trTop.appendChild(thFuncionario);
         trTop.appendChild(thOsStatus);
+        trTop.appendChild(thSla);
 
         thead.appendChild(trTop);
 
@@ -35,6 +37,7 @@ $(document).ready(function () {
         thDt_abertura.innerHTML = 'Abertura';
         thFuncionario.innerHTML = 'Funcionario';
         thOsStatus.innerHTML = 'Status';
+        thSla.innerHTML = 'SLA';
         tabela.id = "os_dados";
 
         conteudo.appendChild(tabela);
