@@ -25,7 +25,6 @@ class PrincipalController extends Controller
         ->join('fornecedor_condominio', 'condominio.id_condominio', '=', 'fornecedor_condominio.id_condominio')
         ->whereNull('condominio.dt_fim')
         ->whereNotNull('condominio.no_condominio')
-        ->where('condominio.is_condominio_teste', false)
         ->where('fornecedor_condominio.id_fornecedor', 32)
         ->orderBy('condominio.no_condominio', 'asc')->get();
 

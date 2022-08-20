@@ -1,7 +1,6 @@
 function sendForm(url) {
     let osForm = new FormData(document.querySelector('form'));
 
-    let id_condominio = osForm.get('id_condominio');
     let data_inicial = new Date(osForm.get('data_inicial') + ' 00:00:00');
     let data_final = new Date(osForm.get('data_final') + ' 23:59:59');
 
@@ -17,7 +16,7 @@ function sendForm(url) {
         let erroMsg = document.createElement('span');
         erroMsg.id = 'msg-erro';
         erroMsg.className = 'text-danger';
-        erroMsg.innerHTML = 'O(s) seguinte(s) campo(s) não foi(foram) preenchido(s): <br>';
+        erroMsg.innerHTML = 'Para fazer a consulta falta preencher o(s) campo(s): <br>';
         osFormGrid.appendChild(erroMsg);
         
         if (osForm.get('data_inicial') === '') {
@@ -43,13 +42,7 @@ function sendForm(url) {
         osForm.set('data_inicial', data_inicial.toLocaleString('sv'));
         osForm.set('data_final', data_final.toLocaleString('sv'));
 
-        console.log(osForm.get('data_inicial'));
-        console.log(osForm.get('data_final'));
-
         const request = new XMLHttpRequest;
-
-
-        console.log(url);
 
         request.open('POST', url);
 

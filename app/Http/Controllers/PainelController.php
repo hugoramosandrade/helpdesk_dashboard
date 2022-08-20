@@ -25,13 +25,18 @@ class PainelController extends Controller
             'fornecedor_funcionario.no_fornecedor_funcionario',
             'os.ds_os',
             'os.ds_os_solucao',
-            'os_status.no_os_status'
+            'os_status.no_os_status',
+            'os_resposta.dt_inicio as resposta_dt_inicio'
         )
         ->join('condominio', 'os.id_condominio', 'condominio.id_condominio')
         ->join('os_tipo', 'os.id_os_tipo', 'os_tipo.id_os_tipo')
         ->join('os_status', 'os.id_os_status', 'os_status.id_os_status')
         ->join('os_fornecedor_funcionario', 'os.id_os', 'os_fornecedor_funcionario.id_os')
         ->join('fornecedor_funcionario', 'os_fornecedor_funcionario.id_fornecedor_funcionario', 'fornecedor_funcionario.id_fornecedor_funcionario')
+        ->leftJoin('os_resposta', function($join){
+            $join->on('os_resposta.id_os', '=','os.id_os')
+            ->where('os_resposta.id_os_status', '=', 30);
+        })
         ->whereBetween('os.dt_inicio', [$data_inicial, $data_final])
         ->whereNull('os.dt_fim')
         ->orderBy('os.dt_inicio', 'desc');

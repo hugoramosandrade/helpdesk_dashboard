@@ -28,8 +28,9 @@ html {
     background-color: #ed4404;
     border: none;
     margin-top: 40px;
-    padding: 5px;
+    padding: 6px;
     border-radius: 4px;
+    margin-bottom: 10px;
 }
 
 .top-nav-menu{
