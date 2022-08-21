@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\PainelController;
 use App\Http\Controllers\PrincipalController;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,10 @@ Route::get('/clientes', [PrincipalController::class, 'getAllClientes'])
 ->name('principal.getclients');
 
 Route::get('/os-tipo', [PrincipalController::class, 'getAllOsTipo'])
-->name('princiupal.ostipo');
+->name('principal.ostipo');
 
 Route::post('/os', [PainelController::class, 'getOs'])
 ->name('painel.getos');
+
+Route::get('/chart', [ChartController::class, 'index'])
+->name('chart.index');

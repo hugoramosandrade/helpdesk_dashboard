@@ -51,8 +51,6 @@ function sendForm(url) {
                 let osResponse = JSON.parse(request.responseText);
 
                 console.log(osResponse);
-                console.log(osResponse.current_page - 1);
-                console.log(osResponse.last_page);
 
                 let tabela = document.getElementById('os_dados');
 
