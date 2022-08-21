@@ -9,6 +9,7 @@ $(document).ready(function () {
         let thCliente = document.createElement('th');
         let thOsTipo = document.createElement('th');
         let thDt_abertura = document.createElement('th');
+        let thFechamento = document.createElement('th');
         let thFuncionario = document.createElement('th');
         let thOsStatus = document.createElement('th');
         let thSla = document.createElement('th');
@@ -16,6 +17,7 @@ $(document).ready(function () {
         trTop.appendChild(thCliente);
         trTop.appendChild(thOsTipo);
         trTop.appendChild(thDt_abertura);
+        trTop.appendChild(thFechamento);
         trTop.appendChild(thFuncionario);
         trTop.appendChild(thOsStatus);
         trTop.appendChild(thSla);
@@ -35,6 +37,7 @@ $(document).ready(function () {
         thCliente.innerHTML = 'Cliente';
         thOsTipo.innerHTML = 'Tipo';
         thDt_abertura.innerHTML = 'Abertura';
+        thFechamento.innerHTML = 'Fechamento'
         thFuncionario.innerHTML = 'Funcionario';
         thOsStatus.innerHTML = 'Status';
         thSla.innerHTML = 'SLA';

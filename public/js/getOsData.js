@@ -51,6 +51,8 @@ function sendForm(url) {
                 let osResponse = JSON.parse(request.responseText);
 
                 console.log(osResponse);
+                console.log(osResponse.current_page - 1);
+                console.log(osResponse.last_page);
 
                 let tabela = document.getElementById('os_dados');
 
@@ -69,6 +71,7 @@ function sendForm(url) {
                     let tdCliente = document.createElement('td');
                     let tdTipo = document.createElement('td');
                     let tdAbertura = document.createElement('td');
+                    let tdFechamento = document.createElement('td');
                     let tdFuncionario = document.createElement('td');
                     let tdOsStatus = document.createElement('td');
                     let tdSla = document.createElement('td');
@@ -76,6 +79,7 @@ function sendForm(url) {
                     tr.appendChild(tdCliente);
                     tr.appendChild(tdTipo);
                     tr.appendChild(tdAbertura);
+                    tr.appendChild(tdFechamento);
                     tr.appendChild(tdFuncionario);
                     tr.appendChild(tdOsStatus);
                     tr.appendChild(tdSla);
@@ -84,7 +88,9 @@ function sendForm(url) {
                     let dt_fechamento = new Date(osResponse.data[i].dt_fechamento)
                     let sla = '';
                     if(osResponse.data[i].dt_fechamento !== null){
-                        sla = dt_fechamento.getTime() - dt_inicio.getTime();
+                        let time = new Date(dt_fechamento.getTime() - dt_inicio.getTime());
+                        sla = time.toISOString().slice('11', '19');
+                        tdFechamento.innerHTML = dt_fechamento.toLocaleString('pt-BR');
                     }
 
                     tdCliente.innerHTML = osResponse.data[i].no_condominio;
@@ -104,7 +110,7 @@ function sendForm(url) {
                 if(paginate !== null){
                     paginate.remove();
                 }
-
+                //Montagem da paginação
                 let nav = document.createElement('nav');
                 let ul = document.createElement('ul');
                 nav.setAttribute('aria-label', 'Page navigation');
@@ -114,24 +120,105 @@ function sendForm(url) {
                 nav.appendChild(ul)
                 painel.appendChild(nav);
 
+                let liPrev = document.createElement('li');
+                let spanPrev = document.createElement('li');
+                liPrev.className = 'page-item';
+                spanPrev.className = 'page-link';
+                spanPrev.style.cursor = 'pointer';
+                spanPrev.innerHTML = '&laquo;';
+                liPrev.appendChild(spanPrev);
+                ul.appendChild(liPrev);
+                if(osResponse.links[0].url === null){
+                    liPrev.className += ' disabled';
+                } else{
+                    spanPrev.setAttribute('onclick', "sendForm('"+ osResponse.links[0].url +"')");
+                }
+
+                let liFirstPage = document.createElement('li');
+                let spanFirstPage = document.createElement('span');
+                liFirstPage.className = 'page-item';
+                spanFirstPage.className = 'page-link';
+                spanFirstPage.innerHTML = 'Primeira';
+                spanFirstPage.style.cursor = 'pointer';
+                liFirstPage.appendChild(spanFirstPage);
+                ul.appendChild(liFirstPage);
+                spanFirstPage.setAttribute('onclick', "sendForm('"+ osResponse.links[1].url +"')");
+                if(osResponse.links[1].active === true){
+                    liFirstPage.className += ' disabled';
+                }
+
                 for(let i in osResponse.links){
-                    let li = document.createElement('li');
-                    let span = document.createElement('span');
-                    li.className = 'page-item';
-                    span.className = 'page-link';
-                    span.style.cursor = 'pointer';
-                    span.innerHTML = osResponse.links[i].label;
-                    li.appendChild(span);
-                    ul.appendChild(li);
-                    span.setAttribute('onclick', "sendForm('"+ osResponse.links[i].url +"')");
-
-                    if(osResponse.links[i].active === true){
-                        li.className = 'active';
+                    if(osResponse.current_page === 1 && i >= osResponse.current_page &&  i <= 5 && osResponse.links[i].url !== null){
+                        let li = document.createElement('li');
+                        let span = document.createElement('span');
+                        
+                        li.className = 'page-item';
+                        span.className = 'page-link';
+                        span.style.cursor = 'pointer';
+                        span.innerHTML = osResponse.links[i].label;
+                        li.appendChild(span);
+                        ul.appendChild(li);
+                        span.setAttribute('onclick', "sendForm('"+ osResponse.links[i].url +"')");
+                        if(osResponse.links[i].active === true){
+                            li.className += ' active';
+                        }
+                    } else if(i >= (osResponse.current_page - 1) && i <= (osResponse.current_page + 3) && i < osResponse.last_page && i != 0){
+                        let li = document.createElement('li');
+                        let span = document.createElement('span');
+                        li.className = 'page-item';
+                        span.className = 'page-link';
+                        span.style.cursor = 'pointer';
+                        span.innerHTML = osResponse.links[i].label;
+                        li.appendChild(span);
+                        ul.appendChild(li);
+                        span.setAttribute('onclick', "sendForm('"+ osResponse.links[i].url +"')");
+                        if(osResponse.links[i].active === true){
+                            li.className += ' active';
+                        }
+                    } else if((i >= (osResponse.last_page - 4)) && (i <= osResponse.last_page) && (osResponse.current_page >= (osResponse.last_page - 3)) && i != 0){
+                        let li = document.createElement('li');
+                        let span = document.createElement('span');
+                        li.className = 'page-item';
+                        span.className = 'page-link';
+                        span.style.cursor = 'pointer';
+                        span.innerHTML = osResponse.links[i].label;
+                        li.appendChild(span);
+                        ul.appendChild(li);
+                        span.setAttribute('onclick', "sendForm('"+ osResponse.links[i].url +"')");
+                        if(osResponse.links[i].active === true){
+                            li.className += ' active';
+                        }
                     }
-                    if(osResponse.links[i].url === null){
-                        li.className = 'disabled';
-                    }
 
+
+                }
+                let liLastPage = document.createElement('li');
+                let spanLastPage = document.createElement('span');
+                liLastPage.className = 'page-item';
+                spanLastPage.className = 'page-link';
+                spanLastPage.style.cursor = 'pointer';
+                spanLastPage.innerHTML = 'Últina';
+                liLastPage.appendChild(spanLastPage);
+                ul.appendChild(liLastPage);
+                let btnLastPage = osResponse.last_page;
+                spanLastPage.setAttribute('onclick', "sendForm('"+ osResponse.links[btnLastPage].url +"')");
+                if(osResponse.links[btnLastPage].active === true){
+                    liLastPage.className += ' disabled';
+                }
+
+                let liNext = document.createElement('li');
+                let spanNext = document.createElement('span');
+                liNext.className = 'page-item';
+                spanNext.className = 'page-link';
+                spanNext.style.cursor = 'pointer';
+                spanNext.innerHTML = '&raquo;';
+                liNext.appendChild(spanNext);
+                ul.appendChild(liNext);
+                let btnNext = osResponse.last_page + 1;
+                if(osResponse.links[btnNext].url === null){
+                    liNext.className += ' disabled';
+                } else{
+                    spanNext.setAttribute('onclick', "sendForm('"+ osResponse.links[btnNext].url +"')");
                 }
 
             }
