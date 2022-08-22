@@ -18,7 +18,9 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/getDataToForm.js') }}"></script>
     <script src="{{ asset('js/getOsData.js') }}"></script>
+    <script src="{{ asset('js/getDataChart.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+    <link rel="icon" href="https://dedicado-upload.s3-us-west-2.amazonaws.com/fornecedor_imagem/dedicado-favicon.png" type="img/png">
     <title>Helpdesk Dashboard - @yield('titulo')</title>
 </head>
 
@@ -30,12 +32,12 @@
                 <img src="{{ asset('img/logo-site-cd.webp') }}" alt="Condominio Dedicado">
             </div>
             <div class="text-center mt-5" id="os-form-grid">
-                @component('site.components.form_consulta', ['function' => $function , 'url_consulta' => 'http://localhost:8000/os'])
+                @component('site.components.form_consulta', ['function' => $function , 'url_consulta' => $url_consulta])
                     
                 @endcomponent
             </div>
         </div>
-        <div class="col-xxl-10 col-md-8 p-2 conteudo overflow-auto" style="border: solid 1px black">
+        <div class="col-xxl-10 col-md-8 p-2 conteudo">
             @yield('conteudo')
         </div>
     </div>

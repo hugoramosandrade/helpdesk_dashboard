@@ -1,70 +1,92 @@
 function sendForm(url) {
+    //recupera o form
     let osForm = new FormData(document.querySelector('form'));
 
+    //acrescenta a hora inicial e a hora final para realizar a consulta
     let data_inicial = new Date(osForm.get('data_inicial') + ' 00:00:00');
     let data_final = new Date(osForm.get('data_final') + ' 23:59:59');
 
+    // verifica se a data enviada é válida | validação da consulta
     if (data_inicial == 'Invalid Date' || data_final == 'Invalid Date') {
+        //recupera o elemento html que contem o formulário
         let osFormGrid = document.getElementById('os-form-grid');
 
+        //verifica se já existe o elemente que exibe a mensagem de erro | "falta de algum campo obrigaatório"
         let filho = osFormGrid.querySelector('#msg-erro');
-
         if (filho !== null) {
-            filho.remove();
+            filho.remove(); //caso já exista o elemente, ele é removido para ser adicionado a mensagem de erro atualizada
         }
 
+        //cria elemento que vai conter a mensagem de erro, e insere o texto base da msg de erro
         let erroMsg = document.createElement('span');
         erroMsg.id = 'msg-erro';
         erroMsg.className = 'text-danger';
         erroMsg.innerHTML = 'Para fazer a consulta falta preencher o(s) campo(s): <br>';
+
+        //adiciona o elemento span com a mensagem de erro no grid do formulário.
         osFormGrid.appendChild(erroMsg);
         
+        //verifica se o campo data_inicial estava vazio, caso sim, adiciona o texto na mensagem de erro
         if (osForm.get('data_inicial') === '') {
             let erroDataInicial = document.createElement('span');
             erroDataInicial.innerHTML = "* Data Inicial<br>";
             erroMsg.appendChild(erroDataInicial);
         }
+        //verifica se o campo data_final está vazio, caso sim, adiciona o texto na mensagem de erro
         if (osForm.get('data_final') === '') {
             let erroDataFinal = document.createElement('span');
             erroDataFinal.innerHTML = "* Data Final<br>";
             erroMsg.appendChild(erroDataFinal);
         }
     } else {
-        let osFormGrid = document.getElementById('os-form-grid');
 
+        //recupera o elemento html onde tem o grid do formulário, e procurao elemento que contem a tag com msg de erro
+        let osFormGrid = document.getElementById('os-form-grid');
         let filho = osFormGrid.querySelector('#msg-erro');
 
+        //verifica se a tag html com msg de erro existe, e caso existir, remove a TAG.
         if (filho !== null) {
             filho.remove();
         }
 
-        //Formato as datas e atualizo no formData
+        //Formata as datas e atualizo no formData
         osForm.set('data_inicial', data_inicial.toLocaleString('sv'));
         osForm.set('data_final', data_final.toLocaleString('sv'));
 
+        //instancia o objeto XMLHttpRequest
         const request = new XMLHttpRequest;
 
+        //abre conexão com backend
         request.open('POST', url);
 
+        //método que verifica a resposta da consulta
         request.onreadystatechange = () => {
             if (request.readyState === 4 && request.status === 200) {
+                //converte a resposta da requisição em um objeto literal
                 let osResponse = JSON.parse(request.responseText);
 
                 console.log(osResponse);
 
+                //recupera o elemento que vai conter os dados da das Os's consultadas
                 let tabela = document.getElementById('os_dados');
 
+                //procura o elemento tbody que tem o id #corpo, armazena o resultado da busca na variável filho
                 let filho = tabela.querySelector('#corpo');
 
+                //verifica se filho (tag tbody) existe, caso exista, ela é removida para poder inserir os dados da nova consulta
                 if (filho !== null) {
                     filho.remove();
                 }
+
+                //cria a tag tbody com id #corpo, id serve para poder remover a tag caso uma nova consulta seja feita.
                 let tbody = document.createElement('tbody');
                 tbody.id = 'corpo';
                 tabela.appendChild(tbody);
 
+                //inicio da montagem dos registros da tabela.
                 for (let i in osResponse.data) {
 
+                    //cria o elemento tr e os td's onde vão conter os dados da OS
                     let tr = document.createElement('tr');
                     let tdCliente = document.createElement('td');
                     let tdTipo = document.createElement('td');
@@ -74,6 +96,7 @@ function sendForm(url) {
                     let tdOsStatus = document.createElement('td');
                     let tdSla = document.createElement('td');
 
+                    //adiciona cada td dentro do elemento tr
                     tr.appendChild(tdCliente);
                     tr.appendChild(tdTipo);
                     tr.appendChild(tdAbertura);
@@ -82,6 +105,7 @@ function sendForm(url) {
                     tr.appendChild(tdOsStatus);
                     tr.appendChild(tdSla);
 
+                    //
                     let dt_inicio = new Date(osResponse.data[i].dt_inicio);
                     let dt_fechamento = new Date(osResponse.data[i].dt_fechamento)
                     let sla = '';

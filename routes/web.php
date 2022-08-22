@@ -34,3 +34,6 @@ Route::post('/os', [PainelController::class, 'getOs'])
 
 Route::get('/chart', [ChartController::class, 'index'])
 ->name('chart.index');
+
+Route::post('/os-chart', [ChartController::class, 'getOsDataChart'])
+->name('chart.get-chart');

@@ -17,6 +17,7 @@ class ChartController extends Controller
         $data_inicial = $request->input('data_inicial');
         $data_final = $request->input('data_final');
 
-        
+        $rs = $request->all();
+        return response()->json($rs);
     }
 }
