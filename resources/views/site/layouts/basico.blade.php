@@ -30,7 +30,7 @@
                 <img src="{{ asset('img/logo-site-cd.webp') }}" alt="Condominio Dedicado">
             </div>
             <div class="text-center mt-5" id="os-form-grid">
-                @component('site.components.form_consulta', ['url_consulta' => 'http://localhost:8000/os'])
+                @component('site.components.form_consulta', ['function' => $function , 'url_consulta' => 'http://localhost:8000/os'])
                     
                 @endcomponent
             </div>
