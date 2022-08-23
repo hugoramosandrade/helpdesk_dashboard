@@ -37,7 +37,7 @@
                 @endcomponent
             </div>
         </div>
-        <div class="col-xxl-10 col-md-8 p-2 conteudo">
+        <div class="col-xxl-10 col-md-8 p-2 conteudo" id="conteudo">
             @yield('conteudo')
         </div>
     </div>

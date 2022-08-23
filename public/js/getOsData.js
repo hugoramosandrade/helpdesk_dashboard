@@ -39,6 +39,19 @@ function sendForm(url) {
             erroMsg.appendChild(erroDataFinal);
         }
     } else {
+        //cria animação de loading
+        if(!document.getElementById('loading')){
+            let divLoad = document.createElement('div');
+            divLoad.className = 'position-absolute loading fa-10x text-dark d-flex justify-content-center align-items-center';
+            divLoad.id = 'loading';
+            let iconLoad1 = document.createElement('i');
+            let iconLoad2 = document.createElement('i');
+            iconLoad1.className = 'fa-solid fa-cog fa-spin-pulse';
+            iconLoad2.className = 'fa-solid fa-cog fa-spin-pulse fa-spin-reverse';
+            divLoad.appendChild(iconLoad1);
+            divLoad.appendChild(iconLoad2);
+            document.getElementById('conteudo').appendChild(divLoad);
+        }
 
         //recupera o elemento html onde tem o grid do formulário, e procurao elemento que contem a tag com msg de erro
         let osFormGrid = document.getElementById('os-form-grid');
@@ -62,6 +75,7 @@ function sendForm(url) {
         //método que verifica a resposta da consulta
         request.onreadystatechange = () => {
             if (request.readyState === 4 && request.status === 200) {
+                document.getElementById('loading').remove();
                 //converte a resposta da requisição em um objeto literal
                 let osResponse = JSON.parse(request.responseText);
 
