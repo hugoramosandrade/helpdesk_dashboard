@@ -45,12 +45,8 @@ function sendForm(url) {
             divLoad.className = 'position-absolute loading fa-10x text-dark d-flex justify-content-center align-items-center';
             divLoad.id = 'loading';
             let iconLoad1 = document.createElement('i');
-            let iconLoad2 = document.createElement('i');
-            iconLoad1.className = 'fa-solid fa-cog fa-spin-pulse';
-            iconLoad2.className = 'fa-solid fa-cog fa-spin-pulse fa-spin-reverse';
-            iconLoad2.setAttribute('style', '--fa-rotate-angle: 0.4deg;');
+            iconLoad1.className = 'fa-solid fa-circle-notch fa-spin';
             divLoad.appendChild(iconLoad1);
-            divLoad.appendChild(iconLoad2);
             document.getElementById('conteudo').appendChild(divLoad);
         }
 
