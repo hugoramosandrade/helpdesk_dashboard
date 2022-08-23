@@ -48,6 +48,7 @@ function sendForm(url) {
             let iconLoad2 = document.createElement('i');
             iconLoad1.className = 'fa-solid fa-cog fa-spin-pulse';
             iconLoad2.className = 'fa-solid fa-cog fa-spin-pulse fa-spin-reverse';
+            iconLoad2.setAttribute('style', '--fa-rotate-angle: 0.4deg;');
             divLoad.appendChild(iconLoad1);
             divLoad.appendChild(iconLoad2);
             document.getElementById('conteudo').appendChild(divLoad);
@@ -75,6 +76,7 @@ function sendForm(url) {
         //método que verifica a resposta da consulta
         request.onreadystatechange = () => {
             if (request.readyState === 4 && request.status === 200) {
+                //remove o ícone de loading
                 document.getElementById('loading').remove();
                 //converte a resposta da requisição em um objeto literal
                 let osResponse = JSON.parse(request.responseText);
@@ -124,8 +126,9 @@ function sendForm(url) {
                     let dt_fechamento = new Date(osResponse.data[i].dt_fechamento)
                     let sla = '';
                     if(osResponse.data[i].dt_fechamento !== null){
-                        let time = new Date(dt_fechamento.getTime() - dt_inicio.getTime());
-                        sla = time.toISOString().slice('11', '19');
+                        let ms = dt_fechamento.getTime() - dt_inicio.getTime();
+
+                        sla = msToHours(ms);
                         tdFechamento.innerHTML = dt_fechamento.toLocaleString('pt-BR');
                     }
 
