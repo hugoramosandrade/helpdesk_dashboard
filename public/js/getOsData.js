@@ -66,7 +66,7 @@ function sendForm(url) {
         //instancia o objeto XMLHttpRequest
         const request = new XMLHttpRequest;
 
-        //abre conexão com backend
+        //estabelece conexão com backend
         request.open('POST', url);
 
         //método que verifica a resposta da consulta

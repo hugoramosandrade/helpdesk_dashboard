@@ -18,7 +18,6 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/getDataToForm.js') }}"></script>
     <script src="{{ asset('js/getOsData.js') }}"></script>
-    <script src="{{ asset('js/getDataChart.js') }}"></script>
     <script src="{{ asset('js/msToHours.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
     <link rel="icon" href="https://dedicado-upload.s3-us-west-2.amazonaws.com/fornecedor_imagem/dedicado-favicon.png" type="img/png">
