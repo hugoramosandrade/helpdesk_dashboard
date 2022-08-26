@@ -21,8 +21,10 @@ function getDataChart(url) {
         request.onreadystatechange = () => {
             //verifica se o estado da requisição é 4 e o status é 200
             if (request.readyState === 4 && request.status === 200) {
-                let response = JSON.parse(request.responseText);
-                //console.log(response);
+                let resposta = JSON.parse(request.responseText);
+                let response = resposta[0];
+                console.log(resposta);
+
                 let tableChart = [];
                 tableChart = [['Tipo', 'Quantidade', { role: "style" }]];
                 for (let i in response) {
@@ -30,7 +32,6 @@ function getDataChart(url) {
                 }
 
                 console.log(tableChart);
-                console.log(generateColor());
 
                 //código que monta o gráfico
                 // Load the Visualization API and the corechart package.
@@ -49,9 +50,13 @@ function getDataChart(url) {
 
                     // Set chart options
                     var options = {
-                        title: 'Quantidade de OS por Tipo',
+                        title: '',
+                        subtitle: 'Quantidade de OS por Tipo',
                         legend: { position: "none" }
                     };
+                    if(resposta[1][0].no_condominio != ''){
+                        options.title = resposta[1][0].no_condominio;
+                    }
 
                     // Instantiate and draw our chart, passing in some options.
                     var chart = new google.visualization.BarChart(document.getElementById('chart_div'));

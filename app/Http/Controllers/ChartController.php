@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Condominio;
 use App\Models\Os;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,7 @@ class ChartController extends Controller
         $id_os_tipo = $request->input('id_os_tipo');
         $data_inicial = $request->input('data_inicial');
         $data_final = $request->input('data_final');
+        $condominio = '';
 
         $os = new Os();
 
@@ -25,7 +27,13 @@ class ChartController extends Controller
         ->whereBetween('os.dt_inicio', [$data_inicial, $data_final])
         ->groupBy('os_tipo.no_os_tipo');
 
-        $rs = $consulta->get();
+        if($id_condominio != ''){
+            $consulta = $consulta->where('os.id_condominio', $id_condominio);
+            $condominio = Condominio::select('no_condominio')
+            ->where('id_condominio', $id_condominio)->get();
+        }
+
+        $rs = [$consulta->get(), $condominio];
         return response()->json($rs);
     }
 }
