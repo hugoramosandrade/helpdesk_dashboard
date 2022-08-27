@@ -75,6 +75,8 @@ $(document).ready(function () {
 
     getCondominio();
 
-    getOsTipo();
+    if (document.getElementById('os_tipo') !== null) {
+        getOsTipo();
+    }
 
 });

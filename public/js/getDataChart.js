@@ -68,15 +68,17 @@ function getDataChart(url) {
                     // Create the data table.
                     var data = google.visualization.arrayToDataTable(tableChart);
 
+                    let divTitle = document.createElement('div');
                     // Set chart options
                     var options = {
-                        title: '',
-                        subtitle: 'Quantidade de OS por Tipo',
+                        title: 'Todos os Clientes\n',
                         legend: { position: "none" }
                     };
                     if(resposta[1][0].no_condominio !== ''){
-                        options.title = resposta[1][0].no_condominio;
+                        options.title = resposta[1][0].no_condominio + '\n';
                     }
+
+                    options.title += 'Período de ' + formatarData(data_inicial) + ' até ' + formatarData(data_final);
 
                     // Instantiate and draw our chart, passing in some options.
                     var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
@@ -91,4 +93,9 @@ function getDataChart(url) {
     } else {
         console.log('Os campos de datas precisam ser preenchidos');
     }
+}
+
+function formatarData(date) {
+    let data = new Date(date);
+    return data.getDate() + '/' + data.getMonth() + '/' + data.getFullYear();
 }

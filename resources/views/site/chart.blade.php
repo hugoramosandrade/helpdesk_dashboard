@@ -1,4 +1,4 @@
-@extends('site.layouts.basico', ['function' => 'getDataChart', 'url_consulta' => 'http://localhost:8000/os-chart'])
+@extends('site.layouts.basico', ['function' => 'getDataChart', 'url_consulta' => 'http://localhost:8000/os-chart', 'page' => 'chart'])
 
 @section('titulo', 'Gráficos')
 
