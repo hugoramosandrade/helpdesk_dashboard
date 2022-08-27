@@ -19,6 +19,7 @@
     <script src="{{ asset('js/getDataToForm.js') }}"></script>
     <script src="{{ asset('js/getOsData.js') }}"></script>
     <script src="{{ asset('js/msToHours.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
     <link rel="icon" href="https://dedicado-upload.s3-us-west-2.amazonaws.com/fornecedor_imagem/dedicado-favicon.png" type="img/png">
     <title>Helpdesk Dashboard - @yield('titulo')</title>

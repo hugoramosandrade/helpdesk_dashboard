@@ -25,7 +25,7 @@ function sendForm(url) {
 
         //adiciona o elemento span com a mensagem de erro no grid do formulário.
         osFormGrid.appendChild(erroMsg);
-        
+
         //verifica se o campo data_inicial estava vazio, caso sim, adiciona o texto na mensagem de erro
         if (osForm.get('data_inicial') === '') {
             let erroDataInicial = document.createElement('span');
@@ -40,13 +40,19 @@ function sendForm(url) {
         }
     } else {
         //cria animação de loading
-        if(!document.getElementById('loading')){
+        if (!document.getElementById('loading')) {
             let divLoad = document.createElement('div');
-            divLoad.className = 'position-absolute loading fa-10x text-dark d-flex justify-content-center align-items-center';
+            divLoad.className = 'position-absolute loading text-dark d-flex justify-content-center align-items-center';
             divLoad.id = 'loading';
-            let iconLoad1 = document.createElement('i');
-            iconLoad1.className = 'fa-solid fa-circle-notch fa-spin';
-            divLoad.appendChild(iconLoad1);
+            let divWrapper = document.createElement('div');
+            divWrapper.className = 'loader-wrapper';
+            let divLoader = document.createElement('div');
+            divLoader.className = 'loader';
+            let divLoaderInner = document.createElement('div');
+            divLoaderInner.className = 'loader loader-inner';
+            divLoader.appendChild(divLoaderInner);
+            divWrapper.appendChild(divLoader);
+            divLoad.appendChild(divWrapper);
             document.getElementById('conteudo').appendChild(divLoad);
         }
 
@@ -125,7 +131,7 @@ function sendForm(url) {
                     /*verifica se a dt_fechamento está vazio, caso esteja significa
                     **que a OS foi fechada por um funcionário interno ao invés do técnico do externo
                     */
-                    if(osResponse.data[i].dt_fechamento !== null){
+                    if (osResponse.data[i].dt_fechamento !== null) {
                         /**
                          * Detalhe importante é que a variável dt_fechamento recebe o campo dt_inicio
                          * da tabela os_resposta. Sempre que o técnico do externo fecha uma OS ele
@@ -164,7 +170,7 @@ function sendForm(url) {
                 //Caso exista, ela é removida para montar a próxima paginação
                 let painel = document.getElementById('painel');
                 let paginate = painel.querySelector('#paginate');
-                if(paginate !== null){
+                if (paginate !== null) {
                     paginate.remove();
                 }
 
@@ -190,107 +196,35 @@ function sendForm(url) {
                 //Verifica se a url do botão anterior existe.
                 //Caso exista signifca que está em uma página acima da página 1, e o botão recebe link e fica ativo.
                 //Caso não exista, significa que a página atual é 1, e o botão de pagina anterior fica desativado.
-                if(osResponse.links[0].url === null){
+                if (osResponse.links[0].url === null) {
                     liPrev.className += ' disabled';
-                } else{
-                    spanPrev.setAttribute('onclick', "sendForm('"+ osResponse.links[0].url +"')");
+                } else {
+                    spanPrev.setAttribute('onclick', "sendForm('" + osResponse.links[0].url + "')");
                 }
 
-                //Cria o botão para ir para a primeira página.
-                //Esse na verdade é uma cópia do botão da página 1.
-                let liFirstPage = document.createElement('li');
-                let spanFirstPage = document.createElement('span');
-                liFirstPage.className = 'page-item';
-                spanFirstPage.className = 'page-link';
-                spanFirstPage.innerHTML = 'Primeira';
-                spanFirstPage.style.cursor = 'pointer';
-                liFirstPage.appendChild(spanFirstPage);
-                ul.appendChild(liFirstPage);
-                spanFirstPage.setAttribute('onclick', "sendForm('"+ osResponse.links[1].url +"')");
-                if(osResponse.links[1].active === true){
-                    liFirstPage.className += ' disabled';
-                }
 
                 //Percorre cada um dos links para montar a paginação.
-                for(let i in osResponse.links){
+                for (let i in osResponse.links) {
 
-                    //Verificar se a página atual é 1, se i está entre 1 e 5 e se o link atual tem url.
-                    //A ideia é montar o range de páginas 1 até a 5, caso a página atual seja a primeira,
-                    //E para não duplicar o botão de página anterior, que está sendo criado fora do loop,
-                    //verifico se o link da url existe, se não existir esse botão não é criado porque ele faz parte do botão página anterior
-                    if(osResponse.current_page === 1 && i >= osResponse.current_page &&  i <= 5 && osResponse.links[i].url !== null){
+                    if (i != 0 && i != (osResponse.links.length - 1)) {
                         let li = document.createElement('li');
                         let span = document.createElement('span');
-                        
+
                         li.className = 'page-item';
                         span.className = 'page-link';
                         span.style.cursor = 'pointer';
                         span.innerHTML = osResponse.links[i].label;
                         li.appendChild(span);
                         ul.appendChild(li);
-                        span.setAttribute('onclick', "sendForm('"+ osResponse.links[i].url +"')");
-                        if(osResponse.links[i].active === true){
+                        if (osResponse.links[i].active === true) {
                             li.className += ' active';
                         }
-                    } 
-                    //Verifico se i está entre a página atual - 1 e página atual + 3, e i tem que ser diferente de 0.
-                    /**
-                     * A ideia aqui é montar o range entre a página anterior a página atual até a página atual + 3.
-                     * Ou seja, um total de 5 botões quando a página atual não estiver na primeira página e nem na última.
-                     * i tem que ser diferente de 0, porque na primeira verificação ele não passa, então ele é testado novamente na segunda verificação.
-                     * i != 0 significa que ele vai imprimir o botão página anterior, por isso preciso pular ese botão.
-                     */
-                    else if(i >= (osResponse.current_page - 1) && i <= (osResponse.current_page + 3) && i < osResponse.last_page && i != 0){
-                        let li = document.createElement('li');
-                        let span = document.createElement('span');
-                        li.className = 'page-item';
-                        span.className = 'page-link';
-                        span.style.cursor = 'pointer';
-                        span.innerHTML = osResponse.links[i].label;
-                        li.appendChild(span);
-                        ul.appendChild(li);
-                        span.setAttribute('onclick', "sendForm('"+ osResponse.links[i].url +"')");
-                        if(osResponse.links[i].active === true){
-                            li.className += ' active';
-                        }
-                    }
-                    /**
-                     * Verificar se i é maior ou igual a ultima página -4. Objetivo é criar os último 5 botoes da paginação.
-                     * Também verifica se i é menor ou igual a última página, o objetivo é não criar dentro do loop o botão próxima pagina.
-                     * Também verifica se a página atual é maior ou igual a última página -3, e o objetivo é acessar esse loop quando a página atual for 3 posições de antecedência da última pagina.
-                     * i != 0 serve para não acessar esse loop para não criar o botão pagina anterior dentro do loop.
-                     */
-                    else if((i >= (osResponse.last_page - 4)) && (i <= osResponse.last_page) && (osResponse.current_page >= (osResponse.last_page - 3)) && i != 0){
-                        let li = document.createElement('li');
-                        let span = document.createElement('span');
-                        li.className = 'page-item';
-                        span.className = 'page-link';
-                        span.style.cursor = 'pointer';
-                        span.innerHTML = osResponse.links[i].label;
-                        li.appendChild(span);
-                        ul.appendChild(li);
-                        span.setAttribute('onclick', "sendForm('"+ osResponse.links[i].url +"')");
-                        if(osResponse.links[i].active === true){
-                            li.className += ' active';
+                        if(osResponse.links[i].url !== null && osResponse.links[i].active !== true){
+                            span.setAttribute('onclick', "sendForm('" + osResponse.links[i].url + "')");
                         }
                     }
 
 
-                }
-                //cria o botão última página
-                let liLastPage = document.createElement('li');
-                let spanLastPage = document.createElement('span');
-                liLastPage.className = 'page-item';
-                spanLastPage.className = 'page-link';
-                spanLastPage.style.cursor = 'pointer';
-                spanLastPage.innerHTML = 'Últina';
-                liLastPage.appendChild(spanLastPage);
-                ul.appendChild(liLastPage);
-                let btnLastPage = osResponse.last_page;
-                spanLastPage.setAttribute('onclick', "sendForm('"+ osResponse.links[btnLastPage].url +"')");
-                //Verifica se o link da próxima página está ativo, caso esteja o botão fica inativo. 
-                if(osResponse.links[btnLastPage].active === true){
-                    liLastPage.className += ' disabled';
                 }
 
                 //cria o botão próxima página
@@ -302,13 +236,13 @@ function sendForm(url) {
                 spanNext.innerHTML = '&raquo;';
                 liNext.appendChild(spanNext);
                 ul.appendChild(liNext);
-                let btnNext = osResponse.last_page + 1;
+                let btnNext = osResponse.links.length - 1;
                 //Verifica se o link do botão próxima página está vazio.
                 //caso esteja o botão é desabilitado.
-                if(osResponse.links[btnNext].url === null){
+                if (osResponse.links[btnNext].url === null) {
                     liNext.className += ' disabled';
-                } else{
-                    spanNext.setAttribute('onclick', "sendForm('"+ osResponse.links[btnNext].url +"')");
+                } else {
+                    spanNext.setAttribute('onclick', "sendForm('" + osResponse.links[btnNext].url + "')");
                 }
 
             }

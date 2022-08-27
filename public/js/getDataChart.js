@@ -8,6 +8,23 @@ function getDataChart(url) {
     //verifica se as datas estão preenchidas
     if (data_inicial !== '' && data_final !== '') {
 
+        //cria animação de loading
+        if(!document.getElementById('loading')){
+            let divLoad = document.createElement('div');
+            divLoad.className = 'position-absolute loading text-dark d-flex justify-content-center align-items-center';
+            divLoad.id = 'loading';
+            let divWrapper = document.createElement('div');
+            divWrapper.className = 'loader-wrapper';
+            let divLoader = document.createElement('div');
+            divLoader.className = 'loader';
+            let divLoaderInner = document.createElement('div');
+            divLoaderInner.className = 'loader loader-inner';
+            divLoader.appendChild(divLoaderInner);
+            divWrapper.appendChild(divLoader);
+            divLoad.appendChild(divWrapper);
+            document.getElementById('conteudo').appendChild(divLoad);
+        }
+
         osForm.set('data_inicial', data_inicial + ' 00:00:00');
         osForm.set('data_final', data_final + ' 23:59:59');
 
@@ -21,6 +38,9 @@ function getDataChart(url) {
         request.onreadystatechange = () => {
             //verifica se o estado da requisição é 4 e o status é 200
             if (request.readyState === 4 && request.status === 200) {
+                //remove o ícone de loading
+                document.getElementById('loading').remove();
+                
                 let resposta = JSON.parse(request.responseText);
                 let response = resposta[0];
                 console.log(resposta);
@@ -54,7 +74,7 @@ function getDataChart(url) {
                         subtitle: 'Quantidade de OS por Tipo',
                         legend: { position: "none" }
                     };
-                    if(resposta[1][0].no_condominio != ''){
+                    if(resposta[1][0].no_condominio !== ''){
                         options.title = resposta[1][0].no_condominio;
                     }
 
