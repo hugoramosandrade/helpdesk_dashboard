@@ -96,6 +96,15 @@ function getDataChart(url) {
 }
 
 function formatarData(date) {
+    date += ' 00:00:00';
     let data = new Date(date);
-    return data.getDate() + '/' + data.getMonth() + '/' + data.getFullYear();
+
+    let dia = data.getDate();
+    let mes = data.getMonth() + 1;
+    let ano = data.getFullYear();
+
+    dia = (dia < 10) ? '0' + dia : dia;
+    mes = (mes < 10) ? '0' + mes : mes;
+
+    return dia + '/' + mes + '/' + ano;
 }
