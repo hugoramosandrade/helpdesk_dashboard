@@ -15,7 +15,11 @@ class PainelController extends Controller
         $data_inicial = $request->input('data_inicial');
         $data_final = $request->input('data_final');
         
-
+        $log = DB::table('log')->select('log.id_log')
+        ->where('log.id_registro', '=', 'os.id_os')
+        ->where('log.no_tabela', '=', 'os')
+        ->orderBy('log.dt_inicio', 'desc')
+        ->limit(1);
         $os = new Os();
         $consulta = $os->select(
             'os.id_os',
@@ -26,7 +30,8 @@ class PainelController extends Controller
             'os.ds_os',
             'os.ds_os_solucao',
             'os_status.no_os_status',
-            'os_resposta.dt_inicio as dt_fechamento'
+            'os_resposta.dt_inicio as dt_fechamento',
+            DB::raw("(select log.dt_inicio from log where log.id_registro = os.id_os and no_tabela = 'os' order by log.dt_inicio desc limit 1) as dt_finalizado")
         )
         ->join('condominio', 'os.id_condominio', 'condominio.id_condominio')
         ->join('os_tipo', 'os.id_os_tipo', 'os_tipo.id_os_tipo')

@@ -17,7 +17,7 @@
         <option value="desc">Decrescente</option>
         <option value="asc">Crescente</option>
     </select>
-    <label for="limit" class="form col-12 text-light mt-2">Limite</label>
+    <label for="limit" class="form col-12 text-light mt-2">Qtd de Registro</label>
     <input type="number" name="limit" id="limit" class="form-control text-center" placeholder="Ex.: 3">
     @endif
     <label for="data_inicial" class="form-label col-12 mt-2 text-light">Data Inicio</label>
@@ -25,6 +25,6 @@
     <label for="data_final" class="form-label col-12 mt-2 text-light">Data Fim</label>
     <input type="date" name="data_final" id="data_final" class="form-control col-12 text-center">
 </form>
-<button class="botao text-white col-12" onclick='{{ $function }}("{{ $url_consulta }}")'>
+<button class="botao text-white col-12" onclick='{{ $function }}("{{ env("APP_URL") . $rota_consulta }}")'>
     <i class="fa-solid fa-magnifying-glass"></i> Consultar
 </button>

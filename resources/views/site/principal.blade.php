@@ -1,4 +1,4 @@
-@extends('site.layouts.basico', ['function' => 'sendForm', 'url_consulta' => 'http://localhost:8000/os', 'page' => 'principal'])
+@extends('site.layouts.basico', ['function' => 'sendForm', 'rota_consulta' => '/os', 'page' => 'principal'])
 
 @section('titulo', 'Principal')
 
