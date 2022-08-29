@@ -126,7 +126,9 @@ function sendForm(url) {
                     //Instancia o objeto Date para manipular as datas
                     let dt_inicio = new Date(osResponse.data[i].dt_inicio);
                     let dt_fechamento = new Date(osResponse.data[i].dt_fechamento)
+                    let dt_finalizado = new Date(osResponse.data[i].dt_finalizado);
                     let sla = '';
+                    let ms = '';
 
                     /*verifica se a dt_fechamento está vazio, caso esteja significa
                     **que a OS foi fechada por um funcionário interno ao invés do técnico do externo
@@ -145,7 +147,7 @@ function sendForm(url) {
                          * entre o dt_inicio e o dt_fechamento e o resultado é armazenado na
                          * variável ms (milisegundos).
                          */
-                        let ms = dt_fechamento.getTime() - dt_inicio.getTime();
+                        ms = dt_fechamento.getTime() - dt_inicio.getTime();
 
                         //passo a variável ms para a função msToHours(ms) que espera receber um parâmetro
                         //do tipo int e retorna o valor dele em hh:mm:ss do parâmetro informado.
@@ -153,6 +155,19 @@ function sendForm(url) {
                         sla = msToHours(ms);
                         //formada o dt_fechamento para o padrão brasileiro de data e hora
                         tdFechamento.innerHTML = dt_fechamento.toLocaleString('pt-BR');
+                    } else {
+                        ms = dt_finalizado.getTime() - dt_inicio.getTime();
+
+                        sla = msToHours(ms);
+                        tdFechamento.innerHTML = dt_finalizado.toLocaleString('pt-BR') + '  ';
+                        let aIcon = document.createElement('a');
+                        let icon = document.createElement('i');
+                        icon.className = 'fa-solid fa-circle fa-2xs';
+                        aIcon.appendChild(icon);
+                        aIcon.className = 'text-primary';
+                        aIcon.setAttribute('data-bs-toggle', 'tooltip');
+                        aIcon.setAttribute('data-bs-title', 'Fechada por um técnico interno');
+                        tdFechamento.appendChild(aIcon);
                     }
 
                     //insere os dados da OS dentro do elemento td
@@ -219,7 +234,7 @@ function sendForm(url) {
                         if (osResponse.links[i].active === true) {
                             li.className += ' active';
                         }
-                        if(osResponse.links[i].url !== null && osResponse.links[i].active !== true){
+                        if (osResponse.links[i].url !== null && osResponse.links[i].active !== true) {
                             span.setAttribute('onclick', "sendForm('" + osResponse.links[i].url + "')");
                         }
                     }
@@ -246,6 +261,8 @@ function sendForm(url) {
                 }
 
             }
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         }
         //envia a requisição para o backend com os dados do formulários para a consulta das Os's
         request.send(osForm);
