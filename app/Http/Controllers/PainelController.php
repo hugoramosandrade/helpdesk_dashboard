@@ -30,6 +30,7 @@ class PainelController extends Controller
             'os.ds_os',
             'os.ds_os_solucao',
             'os_status.no_os_status',
+            'os_status.id_os_status',
             'os_resposta.dt_inicio as dt_fechamento',
             DB::raw("(select log.dt_inicio from log where log.id_registro = os.id_os and no_tabela = 'os' order by log.dt_inicio desc limit 1) as dt_finalizado")
         )

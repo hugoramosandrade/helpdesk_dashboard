@@ -8,36 +8,7 @@ function sendForm(url) {
 
     // verifica se a data enviada é válida | validação da consulta
     if (data_inicial == 'Invalid Date' || data_final == 'Invalid Date') {
-        //recupera o elemento html que contem o formulário
-        let osFormGrid = document.getElementById('os-form-grid');
-
-        //verifica se já existe o elemente que exibe a mensagem de erro | "falta de algum campo obrigaatório"
-        let filho = osFormGrid.querySelector('#msg-erro');
-        if (filho !== null) {
-            filho.remove(); //caso já exista o elemente, ele é removido para ser adicionado a mensagem de erro atualizada
-        }
-
-        //cria elemento que vai conter a mensagem de erro, e insere o texto base da msg de erro
-        let erroMsg = document.createElement('span');
-        erroMsg.id = 'msg-erro';
-        erroMsg.className = 'text-danger';
-        erroMsg.innerHTML = 'Para fazer a consulta falta preencher o(s) campo(s): <br>';
-
-        //adiciona o elemento span com a mensagem de erro no grid do formulário.
-        osFormGrid.appendChild(erroMsg);
-
-        //verifica se o campo data_inicial estava vazio, caso sim, adiciona o texto na mensagem de erro
-        if (osForm.get('data_inicial') === '') {
-            let erroDataInicial = document.createElement('span');
-            erroDataInicial.innerHTML = "* Data Inicial<br>";
-            erroMsg.appendChild(erroDataInicial);
-        }
-        //verifica se o campo data_final está vazio, caso sim, adiciona o texto na mensagem de erro
-        if (osForm.get('data_final') === '') {
-            let erroDataFinal = document.createElement('span');
-            erroDataFinal.innerHTML = "* Data Final<br>";
-            erroMsg.appendChild(erroDataFinal);
-        }
+        showMsgError();
     } else {
         //cria animação de loading
         if (!document.getElementById('loading')) {
@@ -133,7 +104,9 @@ function sendForm(url) {
                     /*verifica se a dt_fechamento está vazio, caso esteja significa
                     **que a OS foi fechada por um funcionário interno ao invés do técnico do externo
                     */
-                    if (osResponse.data[i].dt_fechamento !== null) {
+                    if (osResponse.data[i].id_os_status !== 31) {
+                        tdFechamento.innerHTML = '';
+                    } else if (osResponse.data[i].dt_fechamento !== null) {
                         /**
                          * Detalhe importante é que a variável dt_fechamento recebe o campo dt_inicio
                          * da tabela os_resposta. Sempre que o técnico do externo fecha uma OS ele
@@ -159,7 +132,7 @@ function sendForm(url) {
                         ms = dt_finalizado.getTime() - dt_inicio.getTime();
 
                         sla = msToHours(ms);
-                        tdFechamento.innerHTML = dt_finalizado.toLocaleString('pt-BR') + '  ';
+                        tdFechamento.innerHTML = dt_finalizado.toLocaleString('pt-BR') + ' ';
                         let aIcon = document.createElement('a');
                         let icon = document.createElement('i');
                         icon.className = 'fa-solid fa-circle fa-2xs';

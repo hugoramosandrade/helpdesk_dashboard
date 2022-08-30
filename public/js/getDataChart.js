@@ -91,7 +91,7 @@ function getDataChart(url) {
         //envia a requisição para o backend
         request.send(osForm);
     } else {
-        console.log('Os campos de datas precisam ser preenchidos');
+        showMsgError();
     }
 }
 
